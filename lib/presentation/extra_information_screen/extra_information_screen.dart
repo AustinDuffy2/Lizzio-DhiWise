@@ -1,0 +1,31 @@
+import 'package:spikeai/widgets/app_bar/custom_app_bar.dart';import 'package:spikeai/widgets/app_bar/appbar_leading_iconbutton.dart';import 'package:spikeai/widgets/app_bar/appbar_subtitle.dart';import 'package:spikeai/widgets/custom_text_form_field.dart';import '../extra_information_screen/widgets/layoutchipview_item_widget.dart';import 'widgets/propertyfeatureslist_item_widget.dart';import '../extra_information_screen/widgets/totalroomschipview_item_widget.dart';import '../extra_information_screen/widgets/environmentfacilitieschipview_item_widget.dart';import 'package:spikeai/widgets/custom_elevated_button.dart';import 'package:flutter/material.dart';import 'package:spikeai/core/app_export.dart';import 'package:spikeai/presentation/extra_information_success_bottomsheet/extra_information_success_bottomsheet.dart';
+// ignore_for_file: must_be_immutable
+class ExtraInformationScreen extends StatelessWidget {ExtraInformationScreen({Key? key}) : super(key: key);
+
+TextEditingController priceController = TextEditingController();
+
+TextEditingController priceController1 = TextEditingController();
+
+@override Widget build(BuildContext context) { return SafeArea(child: Scaffold(resizeToAvoidBottomInset: false, appBar: _buildAppBar(context), body: Container(width: double.maxFinite, padding: EdgeInsets.symmetric(vertical: 21.v), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [SizedBox(height: 49.v), Expanded(child: SingleChildScrollView(child: Container(margin: EdgeInsets.only(bottom: 5.v), padding: EdgeInsets.symmetric(horizontal: 3.h), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Container(width: 267.h, margin: EdgeInsets.only(left: 21.h, right: 81.h), child: Text("Almost finish, complete\nthe listing", maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.headlineSmall!.copyWith(height: 1.50))), SizedBox(height: 43.v), Padding(padding: EdgeInsets.only(left: 21.h), child: Text("Sell Price", style: theme.textTheme.titleMedium)), SizedBox(height: 16.v), Padding(padding: EdgeInsets.only(left: 21.h, right: 27.h), child: CustomTextFormField(controller: priceController, hintText: " 180,000", hintStyle: CustomTextStyles.labelLargeSemiBold, alignment: Alignment.center, suffix: Container(margin: EdgeInsets.fromLTRB(30.h, 25.v, 16.h, 25.v), child: CustomImageView(imagePath: ImageConstant.imgIconoirmail, height: 20.adaptSize, width: 20.adaptSize)), suffixConstraints: BoxConstraints(maxHeight: 70.v))), SizedBox(height: 37.v), Padding(padding: EdgeInsets.only(left: 21.h), child: Text("Rent Price", style: theme.textTheme.titleMedium)), SizedBox(height: 16.v), Padding(padding: EdgeInsets.only(left: 21.h, right: 24.h), child: CustomTextFormField(controller: priceController1, hintText: " 315", hintStyle: CustomTextStyles.labelLargeSemiBold, textInputAction: TextInputAction.done, alignment: Alignment.center, suffix: Container(margin: EdgeInsets.fromLTRB(30.h, 25.v, 16.h, 25.v), child: CustomImageView(imagePath: ImageConstant.imgIconoirmail, height: 20.adaptSize, width: 20.adaptSize)), suffixConstraints: BoxConstraints(maxHeight: 70.v))), SizedBox(height: 15.v), _buildLayoutChipView(context), SizedBox(height: 38.v), Padding(padding: EdgeInsets.only(left: 21.h), child: Text("Property Features", style: theme.textTheme.titleMedium)), SizedBox(height: 14.v), _buildPropertyFeaturesList(context), SizedBox(height: 37.v), Padding(padding: EdgeInsets.only(left: 21.h), child: Text("Total Rooms", style: CustomTextStyles.titleMediumBold)), SizedBox(height: 16.v), _buildTotalRoomsChipView(context), SizedBox(height: 36.v), Padding(padding: EdgeInsets.only(left: 21.h), child: Text("Environment / Facilities", style: CustomTextStyles.titleMediumBold)), SizedBox(height: 16.v), _buildEnvironmentFacilitiesChipView(context), SizedBox(height: 46.v), CustomImageView(imagePath: ImageConstant.imgProgressBarGradient, height: 1.v, width: 100.h, alignment: Alignment.center)]))))])), bottomNavigationBar: _buildFinishButton(context))); } 
+/// Section Widget
+PreferredSizeWidget _buildAppBar(BuildContext context) { return CustomAppBar(leadingWidth: 74.h, leading: AppbarLeadingIconbutton(imagePath: ImageConstant.imgArrowLeft, margin: EdgeInsets.only(left: 24.h, top: 3.v, bottom: 3.v), onTap: () {onTapArrowLeft(context);}), centerTitle: true, title: AppbarSubtitle(text: "Add Listing")); } 
+/// Section Widget
+Widget _buildLayoutChipView(BuildContext context) { return Padding(padding: EdgeInsets.only(left: 21.h), child: Wrap(runSpacing: 3.v, spacing: 3.h, children: List<Widget>.generate(2, (index) => LayoutchipviewItemWidget()))); } 
+/// Section Widget
+Widget _buildPropertyFeaturesList(BuildContext context) { return Align(alignment: Alignment.center, child: Padding(padding: EdgeInsets.symmetric(horizontal: 21.h), child: ListView.separated(physics: NeverScrollableScrollPhysics(), shrinkWrap: true, separatorBuilder: (context, index) {return SizedBox(height: 15.v);}, itemCount: 3, itemBuilder: (context, index) {return PropertyfeatureslistItemWidget();}))); } 
+/// Section Widget
+Widget _buildTotalRoomsChipView(BuildContext context) { return Align(alignment: Alignment.centerRight, child: Wrap(runSpacing: 10.v, spacing: 10.h, children: List<Widget>.generate(4, (index) => TotalroomschipviewItemWidget()))); } 
+/// Section Widget
+Widget _buildEnvironmentFacilitiesChipView(BuildContext context) { return Align(alignment: Alignment.center, child: Wrap(runSpacing: 4.v, spacing: 4.h, children: List<Widget>.generate(7, (index) => EnvironmentfacilitieschipviewItemWidget()))); } 
+/// Section Widget
+Widget _buildFinishButton(BuildContext context) { return CustomElevatedButton(text: "Finish", margin: EdgeInsets.only(left: 25.h, right: 23.h, bottom: 24.v), onPressed: () {onTapFinishButton(context);}); } 
+
+/// Navigates back to the previous screen.
+onTapArrowLeft(BuildContext context) { Navigator.pop(context); } 
+
+/// Shows a modal bottom sheet with [ExtraInformationSuccessBottomsheet] 
+/// widget content.
+/// The sheet is displayed on top of the current view with scrolling enabled if 
+/// content exceeds viewport height.
+onTapFinishButton(BuildContext context) { showModalBottomSheet(context: context, builder: (_)=>ExtraInformationSuccessBottomsheet(),isScrollControlled: true); } 
+ }
